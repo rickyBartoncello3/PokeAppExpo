@@ -1,0 +1,86 @@
+import {View} from 'react-native';
+import Text from '@/src/components/Text/Text';
+import {TransactionMovementRow} from '@/src/Z_SRC/features/transactions/components/TransactionMovementRow/TransactionMovementRow';
+import styles from './TransactionGroupCard.styles';
+import {TransactionGroupCardProps} from '@/src/Z_SRC/features/transactions/components/TransactionGroupCard/interfaces';
+import {use, useMemo} from 'react';
+import {ThemeContext} from '@/src/providers/ThemeProvider';
+import {CustomIcon} from '@/src/Z_SRC/shared/components/ui/TabBarIcon/CustomIcon';
+import {ICON_NAMES} from '@/src/Z_SRC/shared/constants/iconNames';
+import {TouchableRipple} from 'react-native-paper';
+import {useCurrenciesQuery} from '@/src/Z_SRC/features/currencies/queries/useCurrenciesQuery';
+import {useCategoriesQuery} from '@/src/Z_SRC/features/categories/queries/useCategoriesQuery';
+import {formatMoney} from '@/src/Z_SRC/shared/utils/formatMoney';
+
+export const TransactionGroupCard = ({
+  group,
+  isExpanded,
+  onToggle,
+  currencyCode,
+  groupMode,
+}: TransactionGroupCardProps) => {
+  const {currentTheme, colors} = use(ThemeContext);
+  const isPositive = group.total >= 0;
+  const {data: currencies = []} = useCurrenciesQuery();
+  const {data: categories = []} = useCategoriesQuery();
+
+  const currency = useMemo(
+    () => currencies.find(c => c.code === currencyCode),
+    [currencyCode, currencies],
+  )!;
+  const category = categories.find(item => item.id === group.id);
+  const icon = category?.icon
+    ? category?.icon
+    : isExpanded
+      ? ICON_NAMES.ARROW_UP
+      : ICON_NAMES.ARROW_DOWN;
+
+  return (
+    <View style={styles.root}>
+      <TouchableRipple borderless onPress={onToggle}>
+        <View style={styles.groupHeader}>
+          <View style={[styles.groupHeaderLeft, {gap: currentTheme.spacing.md}]}>
+            <CustomIcon name={icon} color={category?.color || colors.text} />
+            <Text size={16} weight={900}>
+              {group.title}
+            </Text>
+            <View
+              style={{
+                backgroundColor: colors.primary,
+                borderRadius: 100,
+                padding: currentTheme.spacing.xs,
+              }}
+            >
+              <Text size={12} weight={600}>
+                {group.count}
+              </Text>
+            </View>
+          </View>
+          <View style={styles.groupHeaderRight}>
+            <Text
+              size={15}
+              weight={900}
+              style={{color: isPositive ? colors.income : colors.expense}}
+            >
+              {formatMoney(group.total, currency?.symbol, 3)}
+            </Text>
+          </View>
+        </View>
+      </TouchableRipple>
+
+      {isExpanded ? (
+        <View style={styles.movementsWrapper}>
+          {group.transactions.map(transaction => (
+            <TransactionMovementRow
+              symbol={currency.symbol}
+              key={transaction.id}
+              transaction={transaction}
+              categories={categories}
+              groupMode={groupMode}
+            />
+          ))}
+        </View>
+      ) : null}
+    </View>
+  );
+};

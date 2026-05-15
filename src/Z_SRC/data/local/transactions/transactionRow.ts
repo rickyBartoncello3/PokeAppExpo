@@ -1,0 +1,25 @@
+import {CurrencyCode} from '@/src/Z_SRC/domain/currencies/Currency';
+import {TransactionType} from '@/src/Z_SRC/domain/transactions/TransactionType';
+
+export type TransactionRow = {
+  id: string;
+  type: TransactionType;
+  amount: number;
+  currency: CurrencyCode;
+  amount_in_main_currency: number;
+  main_currency: CurrencyCode;
+  account_id: string;
+  category_id: string | null;
+  occurred_at: string;
+  note: string | null;
+  exchange_rate_to_main_currency: number;
+  created_at: string;
+  updated_at: string;
+  deleted_at: string | null;
+};
+
+export type CategoryExpenseTotalRow = {
+  category_id: string;
+  type: TransactionType;
+  total: number;
+};

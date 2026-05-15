@@ -1,0 +1,67 @@
+import {View} from 'react-native';
+import {router} from 'expo-router';
+import Text from '@/src/components/Text/Text';
+import styles from './TransactionMovementRow.styles';
+import {TransactionMovementRowProps} from '@/src/Z_SRC/features/transactions/components/TransactionMovementRow/interfaces';
+import {TouchableRipple} from 'react-native-paper';
+import {use} from 'react';
+import {ThemeContext} from '@/src/providers/ThemeProvider';
+import {formatDay} from '@/src/Z_SRC/features/transactions/screens/interfaces';
+import {formatMoney} from '@/src/Z_SRC/shared/utils/formatMoney';
+
+export const TransactionMovementRow = ({
+  transaction,
+  categories,
+  symbol,
+  groupMode,
+}: TransactionMovementRowProps) => {
+  const category = categories.find(item => item.id === transaction.categoryId);
+  const {colors} = use(ThemeContext);
+
+  const isIncome = transaction.type === 'income';
+  const amount = formatMoney(transaction.amount.amount, symbol, 3);
+
+  return (
+    <TouchableRipple
+      onPress={() =>
+        router.push({
+          pathname: '/add-transaction',
+          params: {transactionId: transaction.id},
+        })
+      }
+    >
+      <View style={styles.movementRow}>
+        <View style={styles.movementIcon}>
+          <Text
+            size={16}
+            weight={900}
+            style={{color: isIncome ? colors.income : colors.expense}}
+          >
+            {'•'}
+          </Text>
+        </View>
+        <View style={styles.movementInfo}>
+          {groupMode === 'day' && (
+            <Text size={14} weight={800} style={{color: colors.text}}>
+              {category?.name ?? 'No category'}
+            </Text>
+          )}
+
+          <Text size={12} weight={600} style={{color: colors.text}}>
+            {transaction.note || category?.name || transaction.type}
+          </Text>
+          {groupMode === 'category' && (
+            <Text size={14} weight={900} style={{color: colors.text}}>
+              {amount}
+            </Text>
+          )}
+        </View>
+        <Text size={14} weight={900} style={{color: colors.text}}>
+          {groupMode === 'day' ? `${amount}` : `${formatDay(transaction.occurredAt)}`}
+        </Text>
+      </View>
+    </TouchableRipple>
+  );
+};
+
+//formatDay(transaction.occurredAt)

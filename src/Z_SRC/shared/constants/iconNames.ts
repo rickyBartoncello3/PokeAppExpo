@@ -1,0 +1,51 @@
+export const ICON_NAMES = {
+  RESTAURANT: 'restaurant',
+  BUS: 'bus',
+  SHOPPING_BAG: 'shoppingBag',
+  SHOPPING_CART: 'shoppingCart',
+  INVOICE: 'invoice',
+  HEART: 'heart',
+  TICKET: 'ticket',
+  GRADUATION_CAP: 'graduationCap',
+  BODY_PART_LEG: 'bodyPartLeg',
+  BRIEFCASE: 'briefcase',
+  LAPTOP: 'laptop',
+  GIFT: 'gift',
+
+  HOME: 'home',
+  TRANSACTIONS: 'transactions',
+  ADD_TRANSACTION: 'addTransaction',
+  REPORTS: 'reports',
+  MORE: 'more',
+  ADD_CIRCLE: 'addCircle',
+  REMOVE_CIRCLE: 'removeCircle',
+  ADD: 'add',
+  REMOVE: 'remove',
+  CAR: 'car',
+
+  TOOLS: 'tools',
+  MAP: 'map',
+  WALLET: 'wallet',
+  DOLLAR_CIRCLE: 'dollarCircle',
+  DEPOSIT: 'deposit',
+  CHART_UP: 'chartUp',
+  MONEY_RECEIVE: 'moneyReceive',
+  CREDIT_CARD: 'creditCard',
+
+  ARROW_RIGHT: 'arrowRight01',
+  ARROW_DOWN: 'arrowDown01',
+  ARROW_UP: 'arrowUp01',
+  ARROW_LEFT: 'arrowLeft01',
+  ARROW_DOWN_2: 'arrowDown02',
+  ARROW_UP_2: 'arrowUp02',
+  CALENDAR: 'calendar',
+  NOTE: 'note',
+
+  UNFOLD_MORE: 'unfoldMore',
+  UNFOLD_LESS: 'unfoldLess',
+
+  BAR_CHART: 'barChart',
+  LINE_CHART: 'lineChart',
+} as const;
+
+export type IconName = (typeof ICON_NAMES)[keyof typeof ICON_NAMES];

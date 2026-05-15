@@ -1,0 +1,41 @@
+import React, {useMemo} from 'react';
+import {View} from 'react-native';
+
+import Text from '@/src/components/Text/Text';
+
+import styles from './CategorySheet.styles';
+import {CategorySheetProps} from '@/src/Z_SRC/features/transaction/components/CategorySheet/interfaces';
+import {BottomSheetModal} from '@/src/Z_SRC/shared/components/ui/BottomSheetModal/BottomSheetModal';
+import {Item} from '@/src/Z_SRC/features/transaction/components/Item/Item';
+
+export const CategorySheet = ({
+  bottomSheetRef,
+  categories,
+  selectedCategoryId,
+  onSelectCategory,
+}: CategorySheetProps) => {
+  const snapPoints = useMemo(() => [], []);
+
+  return (
+    <BottomSheetModal bottomSheetRef={bottomSheetRef} snapPoints={snapPoints}>
+      <View style={styles.root}>
+        <Text size={18} weight={800}>
+          Select Category
+        </Text>
+        <View style={styles.categoryGrid}>
+          {categories.map(item => {
+            const isSelected = selectedCategoryId === item.id;
+            return (
+              <Item
+                key={item.id}
+                item={item}
+                isSelected={isSelected}
+                onSelect={onSelectCategory}
+              />
+            );
+          })}
+        </View>
+      </View>
+    </BottomSheetModal>
+  );
+};
