@@ -2,9 +2,9 @@ import {Text as RNText} from 'react-native';
 import React, {FC, use, useMemo} from 'react';
 import styles from './Text.styles';
 import {TextProps} from './interfaces';
-import typography from '@/src/Z_SRC/shared/theme/typography';
+import typography from '@/src/theme/typography';
 import {ThemeContext} from '@/src/providers/ThemeProvider';
-import {verticalScale} from '@/src/Z_SRC/shared/theme/scaling';
+import {verticalScale} from '@/src/theme/scaling';
 
 export const fontFamilyMap: {[key: number]: string} = {
   400: typography.fontFamily.Plus_Jakarta_Sans_400,

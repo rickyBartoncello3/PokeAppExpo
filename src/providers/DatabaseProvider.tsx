@@ -1,6 +1,6 @@
 import {PropsWithChildren, createContext, useContext, useEffect, useState} from 'react';
 import {ActivityIndicator, View} from 'react-native';
-import {bootstrapApp} from '@/src/Z_SRC/application/bootstrap/bootstrap';
+import {bootstrapApp} from '@/bootstrapApp';
 
 type DatabaseContextValue = {
   isDatabaseReady: boolean;

@@ -1,8 +1,8 @@
 import {StyleSheet} from 'react-native';
-import colors from '../../Z_SRC/shared/theme/colors.ts';
+import {colors} from '@/src/theme/theme';
 
 export default StyleSheet.create({
   textDefault: {
-    color: colors.gray_800,
+    color: colors.text,
   },
 });

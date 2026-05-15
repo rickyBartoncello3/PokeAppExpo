@@ -1,10 +1,10 @@
 import {View} from 'react-native';
 import {use} from 'react';
 import {ThemeContext} from '@/src/providers/ThemeProvider';
-import {globalStyles} from '@/src/Z_SRC/shared/theme/theme';
+import {globalStyles} from '@/src/theme/theme';
 import {ScrollView} from 'react-native-gesture-handler';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {CustomViewProps} from "@/src/components/CustomView/interfaces";
+import {CustomViewProps} from '@/src/components/CustomView/interfaces';
 
 export const CustomView = ({
   isScrolling = true,

@@ -1,4 +1,4 @@
-import '@/src/Z_SRC/core/i18n/i18n';
+import '@/src/i18n/i18n';
 
 import React, {useEffect} from 'react';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
@@ -17,42 +17,42 @@ import {AppNavigator} from '@/src/navigation/AppNavigator';
 SplashScreen.preventAutoHideAsync();
 
 export default function App() {
-    const [loaded, error] = useFonts({
-        SpaceMono: require('@/src/Z_SRC/assets/fonts/SpaceMono-Regular.ttf'),
-        ...FontAwesome.font,
-    });
+  const [loaded, error] = useFonts({
+    SpaceMono: require('@/src/assets/fonts/SpaceMono-Regular.ttf'),
+    ...FontAwesome.font,
+  });
 
-    useEffect(() => {
-        if (error) {
-            throw error;
-        }
-    }, [error]);
-
-    useEffect(() => {
-        const hideSplash = async () => {
-            if (loaded) {
-                await SplashScreen.hideAsync();
-            }
-        };
-
-        hideSplash();
-    }, [loaded]);
-
-    if (!loaded) {
-        return null;
+  useEffect(() => {
+    if (error) {
+      throw error;
     }
+  }, [error]);
 
-    return (
-        <GestureHandlerRootView style={{flex: 1}}>
-            <AppProviders>
-                <ThemeProvider>
-                    <PaperProvider>
-                        <BottomSheetModalProvider>
-                            <AppNavigator />
-                        </BottomSheetModalProvider>
-                    </PaperProvider>
-                </ThemeProvider>
-            </AppProviders>
-        </GestureHandlerRootView>
-    );
+  useEffect(() => {
+    const hideSplash = async () => {
+      if (loaded) {
+        await SplashScreen.hideAsync();
+      }
+    };
+
+    hideSplash();
+  }, [loaded]);
+
+  if (!loaded) {
+    return null;
+  }
+
+  return (
+    <GestureHandlerRootView style={{flex: 1}}>
+      <AppProviders>
+        <ThemeProvider>
+          <PaperProvider>
+            <BottomSheetModalProvider>
+              <AppNavigator />
+            </BottomSheetModalProvider>
+          </PaperProvider>
+        </ThemeProvider>
+      </AppProviders>
+    </GestureHandlerRootView>
+  );
 }

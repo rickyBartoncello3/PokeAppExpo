@@ -1,35 +1,77 @@
 import React from 'react';
-import {Button, View} from 'react-native';
+import {FlatList, View} from 'react-native';
 
-import {RootStackParamList, Routes} from '@/src/navigation/routes';
-import Text from '@/src/components/Text/Text';
-import {CustomView} from "@/src/components/CustomView/CustomView";
-import styles from "./PokemonListScreen.styles";
-import {useSafeAreaInsets} from "react-native-safe-area-context";
-import {useNavigation} from "@react-navigation/native";
-import {NavigationProp} from "@react-navigation/core";
+import {CustomView} from '@/src/components/CustomView/CustomView';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {PokemonListItem} from '@/src/types/pokemon';
+import PokemonCard from '@/src/components/PokemonCard';
+import {
+  MIN_SEARCH_LENGTH,
+  usePokemonListViewModel,
+} from '@/src/screens/PokemonListScreen/usePokemonListViewModel';
+import {Loading} from '@/src/components/Loading/Loading';
+import {Header} from '@/src/components/Header/Header';
+import {EmptyState} from '@/src/components/EmptyState/EmptyState';
 
 export const PokemonListScreen = () => {
-    const {navigate} = useNavigation<NavigationProp<RootStackParamList>>()
-    const {top} = useSafeAreaInsets();
+  const {top} = useSafeAreaInsets();
+  const vm = usePokemonListViewModel();
+
+  const renderItem = ({item}: {item: PokemonListItem}) => {
     return (
-        <CustomView isScrolling={false} margin>
-            <View style={[styles.root, {marginTop: top}]}></View>
-            <Text size={12} weight={700}>Pokemon List</Text>
-
-            <Button
-                title="Go to Bulbasaur"
-                onPress={() =>
-                    navigate(Routes.PokemonDetail, {
-                        pokemonName: 'bulbasaur',
-                    })
-                }
-            />
-
-            <Button
-                title="Favorites"
-                onPress={() => navigate(Routes.Favorites)}
-            />
-        </CustomView>
+      <PokemonCard.Root pokemon={item} onPress={vm.handleShowPokemonDetails}>
+        <PokemonCard.Actions isFavorite={item.isFavorite} />
+        <PokemonCard.Image />
+        <PokemonCard.Info />
+      </PokemonCard.Root>
     );
+  };
+
+  const renderEmpty = () => {
+    return (
+      <EmptyState
+        title={
+          vm.showFavorites
+            ? vm.t('pokemonList.noFavorites.title')
+            : vm.searchQuery.length >= MIN_SEARCH_LENGTH
+              ? vm.t('pokemonList.noSearchResults.title')
+              : vm.t('pokemonList.empty.title')
+        }
+        description={
+          vm.showFavorites
+            ? vm.t('pokemonList.noFavorites.description')
+            : vm.searchQuery.length >= MIN_SEARCH_LENGTH
+              ? vm.t('pokemonList.noSearchResults.description')
+              : vm.t('pokemonList.empty.description')
+        }
+      />
+    );
+  };
+
+  return (
+    <CustomView isScrolling={false} margin>
+      <Loading isLoading={vm.isLoading} />
+      <View style={[vm.styles.root, {marginTop: top}]}>
+        <Header
+          searchQuery={vm.searchQuery}
+          handleOnChange={vm.setSearchQuery}
+          showFavorites={vm.showFavorites}
+          handleShowFavorites={vm.handleShowFavoritesPokemon}
+        />
+        <FlatList
+          data={vm.pokemons}
+          numColumns={2}
+          keyExtractor={item => item.id}
+          columnWrapperStyle={vm.styles.columnWrapper}
+          contentContainerStyle={vm.styles.listContent}
+          showsVerticalScrollIndicator={false}
+          renderItem={renderItem}
+          onEndReachedThreshold={0.6}
+          ListFooterComponent={<Loading isLoading={vm.isFetchingNextPage} />}
+          onEndReached={vm.fetchNewPokemons}
+          ListEmptyComponent={renderEmpty}
+        />
+      </View>
+    </CustomView>
+  );
 };

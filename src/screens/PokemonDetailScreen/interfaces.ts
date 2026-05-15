@@ -1,10 +1,7 @@
-import {StyleProp, ViewStyle} from 'react-native';
-import {ButtonProps as RNButtonProps} from 'react-native-paper';
-import {ReactNode} from "react";
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {RootStackParamList, Routes} from '@/src/navigation/routes';
 
-export interface CustomViewProps {
-    isScrolling?: boolean;
-    style?: StyleProp<ViewStyle>;
-    children?: ReactNode;
-    margin?: boolean;
-}
+export interface PokemonDetailProps extends NativeStackScreenProps<
+  RootStackParamList,
+  typeof Routes.PokemonDetail
+> {}

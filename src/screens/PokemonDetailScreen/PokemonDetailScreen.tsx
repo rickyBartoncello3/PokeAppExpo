@@ -1,21 +1,40 @@
 import React from 'react';
-import {Button, Text, View} from 'react-native';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {View} from 'react-native';
 
-import {RootStackParamList, Routes} from '@/src/navigation/routes';
+import Text from '@/src/components/Text/Text';
+import {CustomView} from '@/src/components/CustomView/CustomView';
+import {PokemonDetailProps} from '@/src/screens/PokemonDetailScreen/interfaces';
+import {usePokemonDetailViewModel} from '@/src/screens/PokemonDetailScreen/usePokemonDetailViewModel';
+import PokemonDetail from '@/src/components/PokemonDetail';
+import {Loading} from '@/src/components/Loading/Loading';
 
-type Props = NativeStackScreenProps<
-    RootStackParamList,
-    typeof Routes.PokemonDetail
->;
+export const PokemonDetailScreen = ({route}: PokemonDetailProps) => {
+  const vm = usePokemonDetailViewModel(route);
 
-export const PokemonDetailScreen = ({route, navigation}: Props) => {
+  if (vm.error || !vm.pokemon) {
     return (
-        <View>
-            <Text>Pokemon Detail</Text>
-            <Text>{route.params.pokemonName}</Text>
-
-            <Button title="Back" onPress={() => navigation.goBack()} />
+      <CustomView margin>
+        <View style={vm.styles.center}>
+          <Text size={18} weight={900} style={vm.styles.title}>
+            {vm.t('pokemonDetail.error')}
+          </Text>
         </View>
+      </CustomView>
     );
+  }
+
+  return (
+    <CustomView margin>
+      <Loading isLoading={vm.isLoading} />
+      <PokemonDetail.Root pokemon={vm.pokemon}>
+        <PokemonDetail.Header
+          onBack={vm.handleGoBack}
+          onToggleFavorite={vm.handleToggleFavorite}
+        />
+        <PokemonDetail.HeroImage />
+        <PokemonDetail.Info />
+        <PokemonDetail.Metrics />
+      </PokemonDetail.Root>
+    </CustomView>
+  );
 };

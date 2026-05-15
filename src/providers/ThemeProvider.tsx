@@ -1,7 +1,7 @@
 import {PropsWithChildren, createContext, useEffect, useState} from 'react';
 
 import {useColorScheme} from 'react-native';
-import {AppTheme, darkTheme, lightTheme, ThemeColors} from '@/src/Z_SRC/shared/theme/theme';
+import {AppTheme, darkTheme, lightTheme, ThemeColors} from '@/src/theme/theme';
 
 interface ThemeContextProps {
   currentTheme: AppTheme;

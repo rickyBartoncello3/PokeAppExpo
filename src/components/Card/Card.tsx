@@ -1,28 +1,16 @@
 import React, {use} from 'react';
-import styles from './Card.styles';
+import {createStyles} from './Card.styles';
 import {Card as RNCard} from 'react-native-paper';
 import {CardProps} from '@/src/components/Card/interfaces';
 import {ThemeContext} from '@/src/providers/ThemeProvider';
 
 export const Card = ({children, style}: CardProps) => {
-  const {colors, currentTheme} = use(ThemeContext);
+  const {currentTheme} = use(ThemeContext);
+  const styles = createStyles(currentTheme);
 
   return (
-    <RNCard
-      mode="contained"
-      style={[
-        styles.card,
-        {
-          backgroundColor: colors.insightCardBackground,
-          borderColor: colors.border,
-          borderRadius: currentTheme.radius.xl,
-        },
-        style,
-      ]}
-    >
-      <RNCard.Content style={{padding: currentTheme.spacing.xs}}>
-        {children}
-      </RNCard.Content>
+    <RNCard mode="contained" style={styles.card}>
+      <RNCard.Content style={styles.content}>{children}</RNCard.Content>
     </RNCard>
   );
 };

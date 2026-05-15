@@ -1,0 +1,17 @@
+export const backgroundColor: Record<string, string> = {
+  grass: '#D9F5E5',
+  fire: '#FDE2D8',
+  water: '#DCEEFF',
+  electric: '#FFF1BF',
+  poison: '#EAD7FF',
+  ghost: '#E7DDF8',
+  normal: '#F3EDE2',
+  bug: '#E8F5D2',
+  ground: '#F3E1C6',
+  rock: '#E9E2D0',
+  psychic: '#FFE0EC',
+  ice: '#DDF7FF',
+  dragon: '#E1E4FF',
+  fighting: '#FAD8D8',
+  fairy: '#FFE4F3',
+};
