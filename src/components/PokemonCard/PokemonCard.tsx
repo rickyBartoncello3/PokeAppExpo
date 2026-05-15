@@ -1,4 +1,4 @@
-import React, {createContext, use, useContext, useMemo} from 'react';
+import React, {createContext, use, useMemo} from 'react';
 
 import {createPokemonCardStyles} from './PokemonCard.styles';
 import {TouchableRipple} from 'react-native-paper';

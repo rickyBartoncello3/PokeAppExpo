@@ -1,4 +1,4 @@
-import React, {use, useContext, useMemo} from 'react';
+import React, {use, useMemo} from 'react';
 import {ThemeContext} from '@/src/providers/ThemeProvider';
 import {TypeChipProps} from '@/src/components/TypeChip/interfaces';
 import {getTypeColor} from '@/src/utils/getTypeColor';

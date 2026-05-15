@@ -1,4 +1,4 @@
-import React, {createContext, use, useContext, useMemo} from 'react';
+import React, {createContext, use, useMemo} from 'react';
 import {View} from 'react-native';
 
 import {ThemeContext} from '@/src/providers/ThemeProvider';
@@ -7,7 +7,6 @@ import {
   PokemonDetailContextValue,
   PokemonDetailRootProps,
 } from '@/src/components/PokemonDetail/interfaces';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 const PokemonDetailContext = createContext<PokemonDetailContextValue | null>(null);
 
