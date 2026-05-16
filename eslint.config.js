@@ -15,6 +15,8 @@ module.exports = defineConfig([
       'coverage/**',
       'android/**',
       'ios/**',
+      'jest.setup.js',
+      '**/*test.tsx',
     ],
   },
 ]);

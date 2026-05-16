@@ -84,6 +84,7 @@ export const es = {
     height: 'Altura',
     weight: 'Peso',
     error: 'No se pudo cargar el detalle',
+    goToHome: 'Volver a inicio',
   },
   pokemonList: {
     search: 'Buscar',

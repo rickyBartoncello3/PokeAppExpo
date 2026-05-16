@@ -15,6 +15,7 @@ export const createPokemonDetailStyles = (theme: AppTheme) => {
       flex: 1,
       alignItems: 'center',
       justifyContent: 'center',
+      gap: spacing.xxl,
     },
 
     header: {

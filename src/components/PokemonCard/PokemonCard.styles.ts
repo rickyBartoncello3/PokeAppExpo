@@ -42,6 +42,7 @@ export const createPokemonCardStyles = (theme: AppTheme) => {
     image: {
       width: horizontalScale(100),
       height: verticalScale(100),
+      borderRadius: radius.xl,
     },
 
     imagePlaceholder: {

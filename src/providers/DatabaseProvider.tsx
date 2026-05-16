@@ -1,4 +1,4 @@
-import {PropsWithChildren, createContext, useContext, useEffect, useState} from 'react';
+import {PropsWithChildren, createContext, useEffect, useState, use} from 'react';
 import {ActivityIndicator, View} from 'react-native';
 import {bootstrapApp} from '@/bootstrapApp';
 
@@ -42,5 +42,5 @@ export const DatabaseProvider = ({children}: PropsWithChildren) => {
 };
 
 export const useDatabase = () => {
-  return useContext(DatabaseContext);
+  return use(DatabaseContext);
 };

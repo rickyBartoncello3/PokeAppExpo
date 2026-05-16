@@ -1,25 +1,24 @@
-import React from 'react';
-import {View} from 'react-native';
-
-import Text from '@/src/components/Text/Text';
 import {CustomView} from '@/src/components/CustomView/CustomView';
 import {PokemonDetailProps} from '@/src/screens/PokemonDetailScreen/interfaces';
 import {usePokemonDetailViewModel} from '@/src/screens/PokemonDetailScreen/usePokemonDetailViewModel';
 import PokemonDetail from '@/src/components/PokemonDetail';
 import {Loading} from '@/src/components/Loading/Loading';
+import {ErrorState} from '@/src/components/ErrorState/ErrorState';
 
 export const PokemonDetailScreen = ({route}: PokemonDetailProps) => {
   const vm = usePokemonDetailViewModel(route);
 
+  if (vm.isLoading && !vm.pokemon) {
+    return <Loading isLoading={vm.isLoading} full />;
+  }
+
   if (vm.error || !vm.pokemon) {
     return (
-      <CustomView margin>
-        <View style={vm.styles.center}>
-          <Text size={18} weight={900} style={vm.styles.title}>
-            {vm.t('pokemonDetail.error')}
-          </Text>
-        </View>
-      </CustomView>
+      <ErrorState
+        text={vm.t('pokemonDetail.error')}
+        buttonText={vm.t('pokemonDetail.goToHome')}
+        onActionPress={vm.handleRetry}
+      />
     );
   }
 

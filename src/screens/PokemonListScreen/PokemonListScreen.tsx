@@ -1,6 +1,4 @@
-import React from 'react';
 import {FlatList, View} from 'react-native';
-
 import {CustomView} from '@/src/components/CustomView/CustomView';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {PokemonListItem} from '@/src/types/pokemon';
@@ -16,6 +14,10 @@ import {EmptyState} from '@/src/components/EmptyState/EmptyState';
 export const PokemonListScreen = () => {
   const {top} = useSafeAreaInsets();
   const vm = usePokemonListViewModel();
+
+  if (vm.isLoading && vm.pokemons.length === 0) {
+    return <Loading isLoading={vm.isLoading} full />;
+  }
 
   const renderItem = ({item}: {item: PokemonListItem}) => {
     return (

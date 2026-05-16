@@ -18,7 +18,7 @@ const Root = ({pokemon, children}: PokemonDetailRootProps) => {
 
   return (
     <PokemonDetailContext.Provider value={{pokemon, theme: currentTheme, styles}}>
-      <View style={[styles.root]}>{children}</View>
+      <View style={styles.root}>{children}</View>
     </PokemonDetailContext.Provider>
   );
 };

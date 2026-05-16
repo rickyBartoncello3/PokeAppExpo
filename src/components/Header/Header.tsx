@@ -1,5 +1,5 @@
 import {View} from 'react-native';
-import React, {use} from 'react';
+import React, {use, useMemo} from 'react';
 import {ThemeContext} from '@/src/providers/ThemeProvider';
 import {Searchbar, TouchableRipple} from 'react-native-paper';
 import {ICON_NAMES} from '@/src/constants/iconNames';
@@ -16,7 +16,9 @@ export const Header = ({
 }: HeaderProps) => {
   const {t} = useTranslation();
   const {currentTheme, colors} = use(ThemeContext);
-  const styles = createStyles(currentTheme);
+  const styles = useMemo(() => {
+    return createStyles(currentTheme);
+  }, [currentTheme]);
 
   return (
     <View style={styles.root}>

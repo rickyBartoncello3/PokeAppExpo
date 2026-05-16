@@ -10,17 +10,17 @@ export const useToggleFavoriteMutation = () => {
     },
 
     onSuccess: async id => {
-      await queryClient.invalidateQueries({
-        queryKey: ['pokemons'],
-      });
-
-      await queryClient.invalidateQueries({
-        queryKey: ['pokemon-detail', id],
-      });
-
-      await queryClient.invalidateQueries({
-        queryKey: ['favorites'],
-      });
+      await Promise.all([
+        await queryClient.invalidateQueries({
+          queryKey: ['pokemons'],
+        }),
+        await queryClient.invalidateQueries({
+          queryKey: ['pokemon-detail', id],
+        }),
+        await queryClient.invalidateQueries({
+          queryKey: ['favorites'],
+        }),
+      ]);
     },
   });
 };

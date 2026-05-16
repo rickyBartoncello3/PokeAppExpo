@@ -84,6 +84,7 @@ export const en = {
     height: 'Height',
     weight: 'Weight',
     error: 'Could not load Pokémon detail',
+    goToHome: 'Come back to home',
   },
   pokemonList: {
     search: 'Search',

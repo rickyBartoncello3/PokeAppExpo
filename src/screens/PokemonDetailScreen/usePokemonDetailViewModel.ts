@@ -39,5 +39,6 @@ export const usePokemonDetailViewModel = (route: PokemonDetailRoute) => {
     isLoading: isPokemonLoading || isToggleFavoritePending,
     handleToggleFavorite,
     handleGoBack: navigation.goBack,
+    handleRetry: navigation.goBack,
   };
 };

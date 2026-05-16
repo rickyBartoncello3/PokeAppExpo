@@ -1,28 +1,17 @@
 import React, {use, useMemo} from 'react';
-import {Pressable, View} from 'react-native';
-
+import {View} from 'react-native';
 import Text from '@/src/components/Text/Text';
 import {ThemeContext} from '@/src/providers/ThemeProvider';
 import {CustomIcon} from '@/src/components/CustomIcon/CustomIcon';
 import {ICON_NAMES} from '@/src/constants/iconNames';
-
 import {EmptyStateProps} from './interfaces';
 import {createStyles} from './EmptyState.styles';
 
-export const EmptyState = ({
-  title,
-  description,
-  icon,
-  actionLabel,
-  onActionPress,
-}: EmptyStateProps) => {
-  const {currentTheme} = use(ThemeContext);
-
+export const EmptyState = ({title, description, icon}: EmptyStateProps) => {
+  const {currentTheme, colors} = use(ThemeContext);
   const styles = useMemo(() => {
     return createStyles(currentTheme);
   }, [currentTheme]);
-
-  const {colors} = currentTheme;
 
   return (
     <View style={styles.root}>
@@ -31,24 +20,12 @@ export const EmptyState = ({
           <CustomIcon name={ICON_NAMES.POKEBALL} size={48} color={colors.primary} />
         )}
       </View>
-
       <Text size={22} weight={900} style={styles.title}>
         {title}
       </Text>
-
-      {description ? (
-        <Text size={14} weight={600} style={styles.description}>
-          {description}
-        </Text>
-      ) : null}
-
-      {actionLabel && onActionPress ? (
-        <Pressable style={styles.actionButton} onPress={onActionPress}>
-          <Text size={14} weight={900} style={styles.actionText}>
-            {actionLabel}
-          </Text>
-        </Pressable>
-      ) : null}
+      <Text size={14} weight={600} style={styles.description}>
+        {description}
+      </Text>
     </View>
   );
 };

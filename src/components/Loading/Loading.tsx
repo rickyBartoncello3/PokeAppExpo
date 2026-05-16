@@ -1,13 +1,17 @@
-import React, {use, useEffect, useRef} from 'react';
+import React, {use, useEffect, useMemo, useRef} from 'react';
 import {Animated, Easing, View} from 'react-native';
 
 import {LoadingProps} from '@/src/components/Loading/interfaces';
 import {CustomIcon} from '@/src/components/CustomIcon/CustomIcon';
 import {ICON_NAMES} from '@/src/constants/iconNames';
 import {ThemeContext} from '@/src/providers/ThemeProvider';
+import {createStyles} from '@/src/components/Loading/Loading.styles';
 
-export const Loading = ({isLoading}: LoadingProps) => {
-  const {colors} = use(ThemeContext);
+export const Loading = ({isLoading, full = false}: LoadingProps) => {
+  const {colors, currentTheme} = use(ThemeContext);
+  const styles = useMemo(() => {
+    return createStyles(currentTheme);
+  }, [currentTheme]);
   const rotateValue = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
@@ -44,7 +48,7 @@ export const Loading = ({isLoading}: LoadingProps) => {
   });
 
   return (
-    <View style={{alignItems: 'center', justifyContent: 'center'}}>
+    <View style={[styles.root, full ? styles.full : null]}>
       <Animated.View style={{transform: [{rotate}]}}>
         <CustomIcon name={ICON_NAMES.POKEBALL} size={40} color={colors.text} />
       </Animated.View>

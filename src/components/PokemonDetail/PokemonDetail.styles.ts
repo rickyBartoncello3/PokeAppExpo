@@ -46,6 +46,7 @@ export const createStyles = (theme: AppTheme) => {
     image: {
       width: 260,
       height: 260,
+      borderRadius: radius.xl,
     },
 
     infoContent: {

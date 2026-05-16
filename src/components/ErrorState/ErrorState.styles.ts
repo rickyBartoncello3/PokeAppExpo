@@ -1,22 +1,15 @@
 import {StyleSheet} from 'react-native';
-import {height, width} from '@/src/theme/scaling';
 import {AppTheme} from '@/src/theme/theme';
 
 export const createStyles = (theme: AppTheme) => {
-  const {colors} = theme;
+  const {spacing} = theme;
 
   return StyleSheet.create({
     root: {
+      flex: 1,
       alignItems: 'center',
       justifyContent: 'center',
-      backgroundColor: colors.background,
-    },
-    full: {
-      flex: 1,
-      position: 'absolute',
-      height: height,
-      width: width,
-      zIndex: 1,
+      gap: spacing.xxl,
     },
   });
 };

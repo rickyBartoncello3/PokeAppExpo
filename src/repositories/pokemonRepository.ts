@@ -31,7 +31,6 @@ export const pokemonRepository = {
       return {
         nextOffset: response.next ? pageParam + LIMIT : null,
         results,
-        fromCache: false,
       };
     } catch (e) {
       const cachedResults = await pokemonsLocalDataSource.findAll();
@@ -40,7 +39,6 @@ export const pokemonRepository = {
         return {
           results: cachedResults.map(pokemonMappers.rowToDomain),
           nextOffset: null,
-          fromCache: true,
         };
       }
 

@@ -27,8 +27,8 @@ export const PokemonDetailHeader = ({
       >
         <CustomIcon
           name={ICON_NAMES.FAVORITE}
-          color={pokemon.isFavorite ? colors.danger : colors.borderStrong}
-          fillColor={pokemon.isFavorite ? colors.danger : 'transparent'}
+          color={pokemon?.isFavorite ? colors.danger : colors.borderStrong}
+          fillColor={pokemon?.isFavorite ? colors.danger : 'transparent'}
         />
       </TouchableRipple>
     </View>
