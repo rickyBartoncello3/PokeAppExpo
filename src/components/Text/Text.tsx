@@ -87,18 +87,8 @@ const Text: FC<TextProps> = ({size, weight, style, ...props}) => {
     };
   }, [size, weight, colors.text]);
 
-  const accessibilityLabel = useMemo(() => {
-    return props.children && typeof props.children === 'string'
-      ? `Text '${props.children}'`
-      : undefined;
-  }, [props.children]);
-
   return (
-    <RNText
-      {...props}
-      style={[styles.textDefault, dynamicStyle, style]}
-      accessibilityLabel={accessibilityLabel}
-    >
+    <RNText {...props} style={[styles.textDefault, dynamicStyle, style]}>
       {props.children}
     </RNText>
   );
