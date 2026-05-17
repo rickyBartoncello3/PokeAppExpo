@@ -1,9 +1,5 @@
 # Pokédex App
 
-Mobile Pokédex application built with **React Native**, **Expo**, **React Navigation**, **TanStack Query**, **Axios**, **SQLite**, and **i18next**.
-
-The app allows users to browse Pokémon with infinite scroll, view Pokémon details, search locally within the loaded list, save favorites offline, and persist the last loaded data locally.
-
 ---
 
 ## Features
