@@ -13,7 +13,9 @@ jest.mock('@/src/storage/database/local/pokemons/pokemonsLocalDataSource', () =>
   pokemonsLocalDataSource: {
     findFavoriteIds: jest.fn(),
     findAll: jest.fn(),
+    findById: jest.fn(),
     upsert: jest.fn(),
+    toggleFavorite: jest.fn(),
   },
 }));
 
@@ -154,6 +156,108 @@ describe('pokemonRepository', () => {
       await expect(pokemonRepository.getPokemon(0)).rejects.toThrow(
         'Could not find pokemon list',
       );
+    });
+  });
+  describe('getPokemonDetail', () => {
+    it('fetches pokemon detail and preserves favorite state from local database', async () => {
+      jest.mocked(pokeApi.getPokemonDetail).mockResolvedValueOnce({
+        id: 1,
+        name: 'bulbasaur',
+        height: 7,
+        weight: 69,
+        sprites: {
+          front_default: 'bulbasaur-front.png',
+          other: {
+            'official-artwork': {
+              front_default: 'bulbasaur-official.png',
+            },
+          },
+        },
+        types: [
+          {
+            slot: 1,
+            type: {
+              name: 'grass',
+              url: 'https://pokeapi.co/api/v2/type/12/',
+            },
+          },
+          {
+            slot: 2,
+            type: {
+              name: 'poison',
+              url: 'https://pokeapi.co/api/v2/type/4/',
+            },
+          },
+        ],
+        abilities: [
+          {
+            ability: {
+              name: 'overgrow',
+              url: 'https://pokeapi.co/api/v2/ability/65/',
+            },
+            is_hidden: false,
+            slot: 1,
+          },
+        ],
+        stats: [
+          {
+            base_stat: 45,
+            effort: 0,
+            stat: {
+              name: 'hp',
+              url: 'https://pokeapi.co/api/v2/stat/1/',
+            },
+          },
+          {
+            base_stat: 49,
+            effort: 0,
+            stat: {
+              name: 'attack',
+              url: 'https://pokeapi.co/api/v2/stat/2/',
+            },
+          },
+        ],
+      } as any);
+
+      jest.mocked(pokemonsLocalDataSource.findById).mockResolvedValueOnce({
+        id: '1',
+        name: 'bulbasaur',
+        url: 'https://pokeapi.co/api/v2/pokemon/1/',
+        number: '#001',
+        image_url: 'bulbasaur-official.png',
+        types: JSON.stringify(['grass', 'poison']),
+        color: '#A7F3D0',
+        is_favorite: 1,
+      } as any);
+
+      const result = await pokemonRepository.getPokemonDetail('1');
+
+      expect(pokeApi.getPokemonDetail).toHaveBeenCalledWith('1');
+      expect(pokemonsLocalDataSource.findById).toHaveBeenCalledWith('1');
+      expect(result.types).toEqual(['grass', 'poison']);
+    });
+
+    it('throws when pokemon detail request fails', async () => {
+      jest
+        .mocked(pokeApi.getPokemonDetail)
+        .mockRejectedValueOnce(new Error('Network error'));
+
+      await expect(pokemonRepository.getPokemonDetail('1')).rejects.toThrow(
+        'Could not find pokemon detail',
+      );
+    });
+  });
+
+  describe('toggleFavorite', () => {
+    it('toggles favorite state and returns pokemon id', async () => {
+      jest
+        .mocked(pokemonsLocalDataSource.toggleFavorite)
+        .mockResolvedValueOnce(undefined as any);
+
+      const result = await pokemonRepository.toggleFavorite('1');
+
+      expect(pokemonsLocalDataSource.toggleFavorite).toHaveBeenCalledWith('1');
+      expect(result).toBe('1');
     });
   });
 });
